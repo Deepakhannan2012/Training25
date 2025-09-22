@@ -34,8 +34,6 @@ namespace Training25 {
             }
          } while (numSystem != "b" && numSystem != "h");
 
-
-
          void Hexa (int input2) {
             do {
                int remain = input2 % 16;
@@ -66,9 +64,6 @@ namespace Training25 {
             while (input2 != 0);
             Console.WriteLine ($"The converted binary value of {input1} is {result}");
          }
-
-
-
       }
    }
 }
