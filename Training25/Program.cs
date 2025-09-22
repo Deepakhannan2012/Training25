@@ -10,7 +10,6 @@ using System.Globalization;
 namespace Training25 {
    internal class Program {
       static void Main (string[] args) {
-         Console.WriteLine ("Hello, World!");
          int myNum;
          bool isValid;
          string result = "";
