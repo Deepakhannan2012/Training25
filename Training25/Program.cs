@@ -10,24 +10,23 @@ namespace Training25 {
       static void Main (string[] args) {
          do {
             Console.Write ("Enter the number that is to be converted:");
-            sIsValid = int.TryParse (Console.ReadLine (), out sInput1);
+            sIsValid = int.TryParse (Console.ReadLine (), out sMyNum);
          } while (!sIsValid);
-         sInput2 = sInput1;
          Console.WriteLine ("Enter the number system to convert:\nb - binary\th - hexa");
          do {
             sNumSystem = Console.ReadLine ().ToLower ().Trim ();
-            if (sNumSystem == "b") Binary ();
-            else if (sNumSystem == "h") Hexa ();
+            if (sNumSystem == "b") Console.WriteLine ($"The converted binary value of {sMyNum} is {Binary ()}");
+            else if (sNumSystem == "h") Console.WriteLine ($"The converted hexadecimal value of {sMyNum} is {Hexa ()}");
             else Console.WriteLine ("Please enter a valid input !");
          } while (sNumSystem is not "b" and not "h");
       }
 
-      static void Hexa () {
+      static string Hexa () {
          do {
-            if (sInput2 == 0) sResult = "0";
+            if (sMyNum == 0) sResult = "0";
             else {
-               int remain = sInput2 % 16;
-               sInput2 /= 16;
+               int remain = sMyNum % 16;
+               sMyNum /= 16;
                if (remain / 10 == 0) sResult = $"{remain}{sResult}";
                else {
                   string remainHexa = remain switch {
@@ -41,23 +40,23 @@ namespace Training25 {
                   sResult = remainHexa + sResult;
                }
             }
-         } while (sInput2 != 0);
-         Console.WriteLine ($"The converted hexadecimal value of {sInput1} is {sResult}");
+         } while (sMyNum != 0);
+         return sResult;
       }
 
-      static void Binary () {
-         if (sInput2 == 0) sResult = "0";
+      static string Binary () {
+         if (sMyNum == 0) sResult = "0";
          else {
             do {
-               int remain = sInput2 % 2;
-               sInput2 /= 2;
+               int remain = sMyNum % 2;
+               sMyNum /= 2;
                sResult = $"{remain}{sResult}";
-            } while (sInput2 != 0);
+            } while (sMyNum != 0);
          }
-         Console.WriteLine ($"The converted binary value of {sInput1} is {sResult}");
+         return sResult;
       }
 
-      static int sInput1, sInput2;
+      static int sMyNum;
       static bool sIsValid;
       static string sNumSystem = "", sResult = "";
    }
