@@ -11,96 +11,96 @@ using System.Globalization;
 namespace Training25 {
    internal class Program {
       static void Main (string[] args) {
-         Console.WriteLine ("Enter the number that is to be converted:");
          do {
-            sisValid = int.TryParse (Console.ReadLine (), out smyNum);
-            if (!sisValid) Console.WriteLine ("Please enter a valid number !");
-         } while (!sisValid);
+            Console.WriteLine ("Enter the number that is to be converted: ");
+            sIsValid = int.TryParse (Console.ReadLine (), out sMyNum);
+         } while (!sIsValid);
          Console.WriteLine ("Please enter the conversion type:\nw - Words\tr - Roman Numerals (1 - 3999)");
          do {
-            sconversionType = Console.ReadLine ().ToLower ().Trim ();
-            if (sconversionType == "w") {
-               Console.WriteLine (NumtoWord (smyNum));
-               sisValid = true;
-            } else if ((sconversionType == "r") && smyNum < 4000) {
-               Console.WriteLine (NumToRoman (smyNum));
-               sisValid = true;
+            sConversionType = Console.ReadLine ().ToLower ().Trim ();
+            if (sConversionType == "w") {
+               Console.WriteLine (NumtoWord ());
+               sIsValid = true;
+            } else if ((sConversionType is "r") && sMyNum < 4000) {
+               Console.WriteLine (NumToRoman ());
+               sIsValid = true;
             } else {
                Console.WriteLine ("Please enter a valid input ! !");
-               sisValid = false;
+               sIsValid = false;
             }
-         } while (!sisValid);
+         } while (!sIsValid);
       }
 
-      static string TensToWord (int num) {
-         if (num / 10 == 0) return numOnes[(num % 10)];
-         else if (num / 10 == 1) return numTeens[num % 10];
-         else if ((num % 10) == 0) return numTens[num / 10];
-         else return numTens[num / 10] + " " + numOnes[num % 10];
+      static string TensToWord (int sMyNum) {
+         if (sMyNum / 10 == 0) return sNumOnes[(sMyNum % 10)];
+         else if (sMyNum / 10 == 1) return sNumTeens[sMyNum % 10];
+         else if ((sMyNum % 10) == 0) return sNumTens[sMyNum / 10];
+         else return sNumTens[sMyNum / 10] + " " + sNumOnes[sMyNum % 10];
       }
 
-      static string NumtoWord (int num) {
-         if (num == 0) sresult = "zero";
-         if (num / 10000000 > 0) {
-            sresult += NumtoWord (num / 10000000) + " crore ";
-            num %= 10000000;
+      static string NumtoWord () {
+         if (sMyNum == 0) sResult = "zero";
+         if (sMyNum / 10000000 > 0) {
+            sMyNum /= 10000000;
+            sResult += NumtoWord () + " crore ";
+            sMyNum %= 10000000;
          }
-         if (num / 100000 > 0) {
-            sresult += TensToWord (num / 100000) + " lakhs ";
-            num %= 100000;
+         if (sMyNum / 100000 > 0) {
+            sResult += TensToWord (sMyNum / 100000) + " lakhs ";
+            sMyNum %= 100000;
          }
-         if (num / 1000 > 0) {
-            sresult += TensToWord (num / 1000) + " thousand ";
-            num %= 1000;
+         if (sMyNum / 1000 > 0) {
+            sResult += TensToWord (sMyNum / 1000) + " thousand ";
+            sMyNum %= 1000;
          }
-         if (num / 100 > 0) {
-            sresult += numOnes[(num / 100)] + " hundred ";
-            num %= 100;
+         if (sMyNum / 100 > 0) {
+            sResult += sNumOnes[(sMyNum / 100)] + " hundred ";
+            sMyNum %= 100;
          }
-         if (num < 100) {
-            sresult += TensToWord (num);
+         if (sMyNum < 100) {
+            sResult += TensToWord (sMyNum);
          }
-         return sresult;
+         return sResult;
       }
 
-      static string NumToRoman (int myNum) {
-         if (myNum >= 1000) {
-            for (int i = 0; i < (myNum / 1000); i++) sresult += numeral[Array.IndexOf (num, 1000)];
-            myNum %= 1000;
+      static string NumToRoman () {
+         if (sMyNum >= 1000) {
+            for (int i = 0; i < (sMyNum / 1000); i++) sResult += sNumeral[Array.IndexOf (sNum, 1000)];
+            sMyNum %= 1000;
          }
-         if (myNum >= 100) {
-            sresult = OnesToRoman (myNum / 100, 100);
-            myNum %= 100;
+         if (sMyNum >= 100) {
+            sResult = OnesToRoman (sMyNum / 100, 100);
+            sMyNum %= 100;
          }
-         if (myNum >= 10) {
-            sresult = OnesToRoman (myNum / 10, 10);
-            myNum %= 10;
+         if (sMyNum >= 10) {
+            sResult = OnesToRoman (sMyNum / 10, 10);
+            sMyNum %= 10;
          }
-         if (myNum > 0) sresult = OnesToRoman (myNum, 1);
-         else sresult = "Does not exist !";
-         return sresult;
+         if (sMyNum > 0) sResult = OnesToRoman (sMyNum, 1);
+         else sResult = "Does not exist !";
+         return sResult;
       }
 
       static string OnesToRoman (int num1, int numeralValue) {
-         if (num1 < 4) for (int i = 0; i < num1; i++) sresult += numeral[Array.IndexOf (num, numeralValue)];
-         else if (num1 == 4) sresult += numeral[Array.IndexOf (num, numeralValue)] + numeral[Array.IndexOf (num, numeralValue) + 1];
-         else if (num1 == 5) sresult += numeral[Array.IndexOf (num, numeralValue) + 1];
+         if (num1 < 4) for (int i = 0; i < num1; i++) sResult += sNumeral[Array.IndexOf (sNum, numeralValue)];
+         else if (num1 == 4) sResult += sNumeral[Array.IndexOf (sNum, numeralValue)] + sNumeral[Array.IndexOf (sNum, numeralValue) + 1];
+         else if (num1 == 5) sResult += sNumeral[Array.IndexOf (sNum, numeralValue) + 1];
          else if (num1 < 9) {
-            sresult += numeral[Array.IndexOf (num, numeralValue) + 1];
+            sResult += sNumeral[Array.IndexOf (sNum, numeralValue) + 1];
             for (int i = 0; i < (num1 - 5); i++) {
-               sresult += numeral[Array.IndexOf (num, numeralValue)];
+               sResult += sNumeral[Array.IndexOf (sNum, numeralValue)];
             }
-         } else sresult += numeral[Array.IndexOf (num, numeralValue)] + numeral[Array.IndexOf (num, numeralValue) + 2];
-         return sresult;
+         } else sResult += sNumeral[Array.IndexOf (sNum, numeralValue)] + sNumeral[Array.IndexOf (sNum, numeralValue) + 2];
+         return sResult;
       }
 
-      static int smyNum;
-      static bool sisValid;
-      static string sresult = "", sconversionType;
-      static string[] numOnes = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-      static string[] numTens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
-      static string[] numTeens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-      static int[] num = [1, 5, 10, 50, 100, 500, 1000];
-      static string[] numeral = ["I", "V", "X", "L", "C", "D", "M"];
+      static int sMyNum;
+      static bool sIsValid;
+      static string sResult = "", sConversionType;
+      static string[] sNumOnes = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+      static string[] sNumTens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+      static string[] sNumTeens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+      static int[] sNum = [1, 5, 10, 50, 100, 500, 1000];
+      static string[] sNumeral = ["I", "V", "X", "L", "C", "D", "M"];
    }
 }
