@@ -8,30 +8,28 @@
 namespace Training25 {
    internal class Program {
       static void Main (string[] args) {
-         Console.Write ("Enter the first number: ");
          do {
-            isValid = int.TryParse (Console.ReadLine (), out myNum1);
-            if (!isValid) Console.Write ("Please enter a valid number: ");
-         } while (!isValid);
-         Console.Write ("Enter the second number: ");
+            Console.Write ("Enter the first number: ");
+            sIsValid = int.TryParse (Console.ReadLine (), out sMyNum1);
+         } while (!sIsValid);
          do {
-            isValid = int.TryParse (Console.ReadLine (), out myNum2);
-            if (!isValid) Console.Write ("Please enter a valid number: ");
-         } while (!isValid);
+            Console.Write ("Enter the second number: ");
+            sIsValid = int.TryParse (Console.ReadLine (), out sMyNum2);
+         } while (!sIsValid);
          Console.WriteLine ("LCM: " + Lcm ());
-         if (myNum1 == 0 && myNum2 == 0) Console.WriteLine ("GCD: Does not exist !");
+         if (sMyNum1 == 0 && sMyNum2 == 0) Console.WriteLine ("GCD: Does not exist !");
          else Console.WriteLine ("GCD: " + Gcd ());
       }
 
       static int Lcm () {
-         if (myNum1 == 0 || myNum2 == 0) return 0;
-         return (myNum1 * myNum2) / Gcd ();
+         if (sMyNum1 == 0 || sMyNum2 == 0) return 0;
+         return (sMyNum1 * sMyNum2) / Gcd ();
       }
 
       static int Gcd () {
-         if (myNum1 == 0 || myNum2 == 0) return int.Max (myNum1, myNum2);
+         if (sMyNum1 == 0 || sMyNum2 == 0) return int.Max (sMyNum1, sMyNum2);
          int gcd;
-         int temp1 = int.Max (myNum1, myNum2), temp2 = int.Min (myNum1, myNum2);
+         int temp1 = int.Max (sMyNum1, sMyNum2), temp2 = int.Min (sMyNum1, sMyNum2);
          do {
             gcd = temp1 % temp2;
             temp1 = temp2;
@@ -40,7 +38,7 @@ namespace Training25 {
          return temp1;
       }
 
-      static int myNum1, myNum2;
-      static bool isValid;
+      static int sMyNum1, sMyNum2;
+      static bool sIsValid;
    }
 }
