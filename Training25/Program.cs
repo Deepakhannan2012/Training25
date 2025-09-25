@@ -8,19 +8,21 @@
 namespace Training25 {
    internal class Program {
       static void Main (string[] args) {
-         do {
-            Console.Write ("Enter the number that is to be converted:");
-            sIsValid = int.TryParse (Console.ReadLine (), out sMyNum);
-         } while (!sIsValid);
+         Console.Write ("Enter the number that is to be converted:");
+         while (!int.TryParse (Console.ReadLine (), out sMyNum)) Console.WriteLine ("Enter a valid input !");
          Console.WriteLine ("Enter the number system to convert:\nb - binary\th - hexa");
          do {
             sNumSystem = Console.ReadLine ().ToLower ().Trim ();
-            if (sNumSystem == "b") Console.WriteLine ($"The converted binary value of {sMyNum} is {Binary ()}");
-            else if (sNumSystem == "h") Console.WriteLine ($"The converted hexadecimal value of {sMyNum} is {Hexa ()}");
-            else Console.WriteLine ("Please enter a valid input !");
+            string output = sNumSystem switch {
+               "b" => $"The converted binary value of {sMyNum} is {Binary ()}",
+               "h" => $"The converted hexadecimal value of {sMyNum} is {Hexa ()}",
+               _ => "Please enter a valid input !"
+            };
+            Console.WriteLine (output);
          } while (sNumSystem is not "b" and not "h");
       }
 
+      //Hexadecimal conversion method
       static string Hexa () {
          do {
             if (sMyNum == 0) sResult = "0";
@@ -44,6 +46,7 @@ namespace Training25 {
          return sResult;
       }
 
+      //Binary conversion method
       static string Binary () {
          if (sMyNum == 0) sResult = "0";
          else {
@@ -57,7 +60,6 @@ namespace Training25 {
       }
 
       static int sMyNum;
-      static bool sIsValid;
       static string sNumSystem = "", sResult = "";
    }
 }
