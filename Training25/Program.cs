@@ -8,28 +8,30 @@
 namespace Training25 {
    internal class Program {
       static void Main (string[] args) {
-         Console.Write ("Enter the number that is to be converted:");
+         Console.Write ("Enter the number that is to be converted: ");
          while (!int.TryParse (Console.ReadLine (), out sMyNum)) Console.WriteLine ("Enter a valid input !");
          Console.WriteLine ("Enter the number system to convert:\nb - binary\th - hexa");
+         string numSystem;
          do {
-            sNumSystem = Console.ReadLine ().ToLower ().Trim ();
-            string output = sNumSystem switch {
+            numSystem = Console.ReadLine ().ToLower ().Trim ();
+            string output = numSystem switch {
                "b" => $"The converted binary value of {sMyNum} is {Binary ()}",
                "h" => $"The converted hexadecimal value of {sMyNum} is {Hexa ()}",
                _ => "Please enter a valid input !"
             };
             Console.WriteLine (output);
-         } while (sNumSystem is not "b" and not "h");
+         } while (numSystem is not "b" and not "h");
       }
 
-      //Hexadecimal conversion method
+      // Hexadecimal conversion method
       static string Hexa () {
+         string result = "";
          do {
-            if (sMyNum == 0) sResult = "0";
+            if (sMyNum == 0) result = "0";
             else {
                int remain = sMyNum % 16;
                sMyNum /= 16;
-               if (remain / 10 == 0) sResult = $"{remain}{sResult}";
+               if (remain / 10 == 0) result = $"{remain}{result}";
                else {
                   string remainHexa = remain switch {
                      10 => "A",
@@ -39,27 +41,27 @@ namespace Training25 {
                      14 => "E",
                      15 => "F"
                   };
-                  sResult = remainHexa + sResult;
+                  result = remainHexa + result;
                }
             }
          } while (sMyNum != 0);
-         return sResult;
+         return result;
       }
 
-      //Binary conversion method
+      // Binary conversion method
       static string Binary () {
-         if (sMyNum == 0) sResult = "0";
+         string result = "";
+         if (sMyNum == 0) result = "0";
          else {
             do {
                int remain = sMyNum % 2;
                sMyNum /= 2;
-               sResult = $"{remain}{sResult}";
+               result = $"{remain}{result}";
             } while (sMyNum != 0);
          }
-         return sResult;
+         return result;
       }
 
       static int sMyNum;
-      static string sNumSystem = "", sResult = "";
    }
 }
