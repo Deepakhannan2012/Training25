@@ -5,6 +5,8 @@
 // Program.cs
 // Program on main branch.
 // ------------------------------------------------------------------------------------------------
+using System.Text;
+
 namespace Training25 {
    internal class Program {
       static void Main (string[] args) {
@@ -25,41 +27,41 @@ namespace Training25 {
 
       // Hexadecimal conversion method
       static string Hexa () {
-         string result = "";
+         var sb = new StringBuilder ();
          do {
-            if (sMyNum == 0) result = "0";
+            if (sMyNum == 0) sb.Append ('0');
             else {
                int remain = sMyNum % 16;
                sMyNum /= 16;
-               if (remain / 10 == 0) result = $"{remain}{result}";
+               if (remain / 10 == 0) sb.Insert (0, remain);
                else {
-                  string remainHexa = remain switch {
-                     10 => "A",
-                     11 => "B",
-                     12 => "C",
-                     13 => "D",
-                     14 => "E",
-                     15 => "F"
+                  char remainHexa = remain switch {
+                     10 => 'A',
+                     11 => 'B',
+                     12 => 'C',
+                     13 => 'D',
+                     14 => 'E',
+                     15 => 'F'
                   };
-                  result = remainHexa + result;
+                  sb.Insert (0, remainHexa);
                }
             }
          } while (sMyNum != 0);
-         return result;
+         return sb.ToString ();
       }
 
       // Binary conversion method
       static string Binary () {
-         string result = "";
-         if (sMyNum == 0) result = "0";
+         var sb = new StringBuilder ();
+         if (sMyNum == 0) sb.Append ('0');
          else {
             do {
                int remain = sMyNum % 2;
                sMyNum /= 2;
-               result = $"{remain}{result}";
+               sb.Insert (0, remain);
             } while (sMyNum != 0);
          }
-         return result;
+         return sb.ToString ();
       }
 
       static int sMyNum;
