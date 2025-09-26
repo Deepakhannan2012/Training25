@@ -5,102 +5,72 @@
 // Program.cs
 // Program on main branch.
 // ------------------------------------------------------------------------------------------------
-using System;
-using System.Globalization;
+using System.Text;
 
 namespace Training25 {
    internal class Program {
       static void Main (string[] args) {
-         do {
-            Console.WriteLine ("Enter the number that is to be converted: ");
-            sIsValid = int.TryParse (Console.ReadLine (), out sMyNum);
-         } while (!sIsValid);
+         Console.Write ("Enter the number that is to be converted: ");
+         while (!int.TryParse (Console.ReadLine (), out sMyNum)) Console.WriteLine ("Please enter a valid input !");
          Console.WriteLine ("Please enter the conversion type:\nw - Words\tr - Roman Numerals (1 - 3999)");
+         string conversionType;
          do {
-            sConversionType = Console.ReadLine ().ToLower ().Trim ();
-            if (sConversionType == "w") {
-               Console.WriteLine (NumtoWord ());
-               sIsValid = true;
-            } else if ((sConversionType is "r") && sMyNum < 4000) {
-               Console.WriteLine (NumToRoman ());
-               sIsValid = true;
-            } else {
-               Console.WriteLine ("Please enter a valid input ! !");
-               sIsValid = false;
+            conversionType = Console.ReadLine ().ToLower ().Trim ();
+            string output = conversionType switch {
+               "w" => NumToWord (),
+               "r" => NumToRoman (),
+               _ => "Please enter a valid input !"
+            };
+            Console.WriteLine (output);
+         } while (conversionType is not "w" and not "r");
+      }
+
+      // Number to word method
+      static string NumToWord () {
+         string[] ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+         string[] tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+         string[] teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
+                              "eighteen", "nineteen"];
+         Dictionary<int, string> numValue = new (){{ 10000000,"crore"},{100000,"lakh"},{1000, "thousand"},
+                                                  {100, "hundred"},{1,""} };
+         var sb = new StringBuilder ();
+         if (sMyNum is 0) return "Zero";
+         if (sMyNum is < 0) {
+            sMyNum = -sMyNum;
+            return $"Minus {NumToWord ()}";
+         }
+         foreach (KeyValuePair<int, string> pair in numValue)
+            if (sMyNum / pair.Key > 0) {
+               sb.Append ($"{TensToWord (sMyNum / pair.Key)} {pair.Value} ");
+               sMyNum %= pair.Key;
             }
-         } while (!sIsValid);
+         return sb.ToString ();
+
+         string TensToWord (int num) {
+            int divNum = num / 10, modNum = num % 10;
+            if (divNum is 0) return ones[modNum];
+            else if (divNum is 1) return teens[modNum];
+            else if (modNum is 0) return tens[divNum];
+            else return $"{tens[divNum]} {ones[modNum]}";
+         }
       }
 
-      static string TensToWord (int sMyNum) {
-         if (sMyNum / 10 == 0) return sNumOnes[(sMyNum % 10)];
-         else if (sMyNum / 10 == 1) return sNumTeens[sMyNum % 10];
-         else if ((sMyNum % 10) == 0) return sNumTens[sMyNum / 10];
-         else return sNumTens[sMyNum / 10] + " " + sNumOnes[sMyNum % 10];
-      }
-
-      static string NumtoWord () {
-         if (sMyNum == 0) sResult = "zero";
-         if (sMyNum / 10000000 > 0) {
-            sMyNum /= 10000000;
-            sResult += NumtoWord () + " crore ";
-            sMyNum %= 10000000;
-         }
-         if (sMyNum / 100000 > 0) {
-            sResult += TensToWord (sMyNum / 100000) + " lakhs ";
-            sMyNum %= 100000;
-         }
-         if (sMyNum / 1000 > 0) {
-            sResult += TensToWord (sMyNum / 1000) + " thousand ";
-            sMyNum %= 1000;
-         }
-         if (sMyNum / 100 > 0) {
-            sResult += sNumOnes[(sMyNum / 100)] + " hundred ";
-            sMyNum %= 100;
-         }
-         if (sMyNum < 100) {
-            sResult += TensToWord (sMyNum);
-         }
-         return sResult;
-      }
-
+      // Number to roman method
       static string NumToRoman () {
-         if (sMyNum >= 1000) {
-            for (int i = 0; i < (sMyNum / 1000); i++) sResult += sNumeral[Array.IndexOf (sNum, 1000)];
-            sMyNum %= 1000;
-         }
-         if (sMyNum >= 100) {
-            sResult = OnesToRoman (sMyNum / 100, 100);
-            sMyNum %= 100;
-         }
-         if (sMyNum >= 10) {
-            sResult = OnesToRoman (sMyNum / 10, 10);
-            sMyNum %= 10;
-         }
-         if (sMyNum > 0) sResult = OnesToRoman (sMyNum, 1);
-         else sResult = "Does not exist !";
-         return sResult;
-      }
-
-      static string OnesToRoman (int num1, int numeralValue) {
-         if (num1 < 4) for (int i = 0; i < num1; i++) sResult += sNumeral[Array.IndexOf (sNum, numeralValue)];
-         else if (num1 == 4) sResult += sNumeral[Array.IndexOf (sNum, numeralValue)] + sNumeral[Array.IndexOf (sNum, numeralValue) + 1];
-         else if (num1 == 5) sResult += sNumeral[Array.IndexOf (sNum, numeralValue) + 1];
-         else if (num1 < 9) {
-            sResult += sNumeral[Array.IndexOf (sNum, numeralValue) + 1];
-            for (int i = 0; i < (num1 - 5); i++) {
-               sResult += sNumeral[Array.IndexOf (sNum, numeralValue)];
+         Dictionary<int, string> numRoman = new () { { 1000, "M" },{ 900, "CM" },{ 500, "D" },{ 400, "CD" },
+                                                     { 100, "C" },{ 90, "XC" },{ 50, "L" },{ 40, "IV" },{ 10, "X" },
+                                                     { 9, "IX" },{ 5, "V" },{ 4, "IV" },{ 1, "I" } };
+         var sb = new StringBuilder ();
+         if (sMyNum is < 1 or > 3999) return "Does not exist !";
+         foreach (KeyValuePair<int, string> item in numRoman) {
+            while (sMyNum >= item.Key) {
+               sb.Append (item.Value);
+               sMyNum -= item.Key;
             }
-         } else sResult += sNumeral[Array.IndexOf (sNum, numeralValue)] + sNumeral[Array.IndexOf (sNum, numeralValue) + 2];
-         return sResult;
+         }
+         return sb.ToString ();
       }
 
       static int sMyNum;
-      static bool sIsValid;
-      static string sResult = "", sConversionType;
-      static string[] sNumOnes = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-      static string[] sNumTens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
-      static string[] sNumTeens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-      static int[] sNum = [1, 5, 10, 50, 100, 500, 1000];
-      static string[] sNumeral = ["I", "V", "X", "L", "C", "D", "M"];
    }
 }
