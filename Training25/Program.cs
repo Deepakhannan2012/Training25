@@ -3,42 +3,32 @@
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------
 // Program.cs
-// Program on main branch.
+// Program on T03 branch.
 // ------------------------------------------------------------------------------------------------
+using static System.Console;
+
 namespace Training25 {
    internal class Program {
       static void Main (string[] args) {
-         do {
-            Console.Write ("Enter the first number: ");
-            sIsValid = int.TryParse (Console.ReadLine (), out sMyNum1);
-         } while (!sIsValid);
-         do {
-            Console.Write ("Enter the second number: ");
-            sIsValid = int.TryParse (Console.ReadLine (), out sMyNum2);
-         } while (!sIsValid);
-         Console.WriteLine ("LCM: " + Lcm ());
-         if (sMyNum1 == 0 && sMyNum2 == 0) Console.WriteLine ("GCD: Does not exist !");
-         else Console.WriteLine ("GCD: " + Gcd ());
+         Write ("Enter the first number: ");
+         while (!int.TryParse (ReadLine (), out sNum1)) WriteLine ("Enter a valid input !");
+         Write ("Enter the second number: ");
+         while (!int.TryParse (ReadLine (), out sNum2)) WriteLine ("Enter a valid input !");
+         WriteLine ($"LCM: {Lcm ()}\nGCD: {Gcd ()}");
       }
 
-      static int Lcm () {
-         if (sMyNum1 == 0 || sMyNum2 == 0) return 0;
-         return (sMyNum1 * sMyNum2) / Gcd ();
-      }
+      // Returns the LCM of two numbers
+      static int Lcm () => (sNum1 * sNum2) / Gcd ();
 
+      // Returns the GCD of two numbers
       static int Gcd () {
-         if (sMyNum1 == 0 || sMyNum2 == 0) return int.Max (sMyNum1, sMyNum2);
-         int gcd;
-         int temp1 = int.Max (sMyNum1, sMyNum2), temp2 = int.Min (sMyNum1, sMyNum2);
+         int gcd, temp1 = int.Max (sNum1, sNum2), temp2 = int.Min (sNum1, sNum2);
          do {
-            gcd = temp1 % temp2;
-            temp1 = temp2;
-            temp2 = gcd;
-         } while (gcd != 0);
+            gcd = temp1 % temp2; temp1 = temp2; temp2 = gcd;
+         } while (gcd is not 0);
          return temp1;
       }
 
-      static int sMyNum1, sMyNum2;
-      static bool sIsValid;
+      static int sNum1, sNum2;
    }
 }
