@@ -31,6 +31,10 @@ namespace Training25 {
       static string NumToWord () {
          if (sNum is 0) return "Zero";
          if (sNum is < 0) { sNum = -sNum; return $"Minus {NumToWord ()}"; }
+         string[] ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+         string[] tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+         string[] teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
+                           "eighteen", "nineteen"];
          Dictionary<int, string> numValue = new () { { 10000000, "crore" },{ 100000, "lakh" },{ 1000, "thousand" },
                                                      { 100, "hundred" },{ 1, "" } };
          var sb = new StringBuilder ();
@@ -40,11 +44,7 @@ namespace Training25 {
          }
          return sb.ToString ();
 
-         static string TensToWord (int num) {
-            string[] ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-            string[] tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
-            string[] teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen",
-                           "eighteen", "nineteen"];
+         string TensToWord (int num) {
             int divNum = num / 10, modNum = num % 10;
             return divNum switch {
                0 => ones[modNum],
