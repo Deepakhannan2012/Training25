@@ -7,28 +7,33 @@
 // ------------------------------------------------------------------------------------------------
 using static System.Console;
 
-namespace Training25 {
-   internal class Program {
-      static void Main (string[] args) {
-         Write ("Enter the first number: ");
-         while (!int.TryParse (ReadLine (), out sNum1)) WriteLine ("Enter a valid input !");
-         Write ("Enter the second number: ");
-         while (!int.TryParse (ReadLine (), out sNum2)) WriteLine ("Enter a valid input !");
-         WriteLine ($"LCM: {Lcm ()}\nGCD: {Gcd ()}");
-      }
-
-      // Returns the LCM of two numbers
-      static int Lcm () => (sNum1 * sNum2) / Gcd ();
-
-      // Returns the GCD of two numbers
-      static int Gcd () {
-         int gcd, temp1 = int.Max (sNum1, sNum2), temp2 = int.Min (sNum1, sNum2);
-         do {
-            gcd = temp1 % temp2; temp1 = temp2; temp2 = gcd;
-         } while (gcd is not 0);
-         return temp1;
-      }
-
-      static int sNum1, sNum2;
+namespace Training25;
+internal class Program {
+   static void Main (string[] args) {
+      sNum1 = GetNum ("first"); sNum2 = GetNum ("second");
+      (int lcm, int gcd) = (sNum1, sNum2) switch {
+         (0, 0) => (0, 0),
+         (_, 0) or (0, _) => (0, int.Max (sNum1, sNum2)),
+         _ => LCMAndGCD ()
+      };
+      Write ($"LCM: {lcm}\nGCD: {gcd}");
    }
+
+   // Returns the LCM and GCD of two numbers
+   static (int lcm, int gcd) LCMAndGCD () {
+      (int temp1, int temp2) = (sNum1 > sNum2) ? (sNum1, sNum2) : (sNum2, sNum1);
+      while (temp2 is not 0) (temp1, temp2) = (temp2, temp1 % temp2);
+      return (sNum1 * sNum2 / temp1, temp1);
+   }
+
+   // Gets a valid integer input from the user
+   static int GetNum (string count) {
+      int num;
+      Write ($"Enter the {count} number: ");
+      while (!int.TryParse (ReadLine (), out num)) WriteLine ("Enter a valid input !");
+      return num;
+   }
+
+   static int sNum1, sNum2;
 }
+
