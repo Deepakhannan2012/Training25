@@ -10,11 +10,11 @@ using static System.Console;
 namespace Training25;
 internal class Program {
    static void Main (string[] args) {
+      (int startNum, int endNum) = (1, 10);
       // Displays multiplication table from 1 to 10
-      for (int tableNum = 1; tableNum < 11; tableNum++) {
-         for (int mulNum = 1; mulNum < 11; mulNum++) WriteLine ($"{tableNum} * {mulNum,2} = {tableNum * mulNum}");
+      for (int tableNum = startNum; tableNum <= endNum; tableNum++) {
+         for (int mulNum = startNum; mulNum <= endNum; mulNum++) WriteLine ($"{tableNum} * {mulNum,2} = {tableNum * mulNum}");
          WriteLine ("");
       }
    }
 }
-
