@@ -13,7 +13,7 @@ internal class Program {
       int num;
       Write ("Enter a number to find its Digital Root: ");
       while (!int.TryParse (ReadLine (), out num)) Write ("Enter a valid input: ");
-      Write ($"The digital root of {num} is {DigiRoot (num)}.");
+      Write ($"The digital root of {num} is {DigiRoot (Math.Abs (num))}.");
    }
 
    // Returns the digital root of the input
