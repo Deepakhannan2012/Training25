@@ -14,7 +14,7 @@ internal class Program {
       OutputEncoding = new UnicodeEncoding ();
       char[] white = ['♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖'];
       char[] black = ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'];
-      for (int i = 0; i < 33; i++) {
+      for (int i = 0; i <= 32; i++) {
          Action action = i switch {
             0 => () => Border ('┌', '┬', '┐'),
             2 => () => Pieces (black),
@@ -31,18 +31,14 @@ internal class Program {
 
    // Print pieces in a row
    static void Pieces (char[] colour) {
-      for (int i = 0; i < 8; i++) Write ($"│   {colour[i]}   "); WriteLine ("│");
+      for (int i = 0; i <= 7; i++) Write ($"│   {colour[i]}   "); WriteLine ("│");
    }
 
    // Print border line
-   static void Border (char left, char mid, char right) {
-      WriteLine ($"{left}{String.Concat (Enumerable.Repeat ($"───────{mid}", 7))}───────{right}");
-   }
+   static void Border (char left, char mid, char right)
+      => WriteLine ($"{left}{String.Concat (Enumerable.Repeat ($"───────{mid}", 7))}───────{right}");
 
    // Print a row of pawns
-   static void Pawn (char piece) {
-      WriteLine ($"{String.Concat (Enumerable.Repeat ($"│   {piece}   ", 8))}│");
-   }
+   static void Pawn (char piece)
+      => WriteLine ($"{String.Concat (Enumerable.Repeat ($"│   {piece}   ", 8))}│");
 }
-
-
