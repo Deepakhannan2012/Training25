@@ -16,14 +16,14 @@ internal class Program {
       char[] black = ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'];
       for (int i = 0; i <= 32; i++) {
          Action action = i switch {
-            0 => () => Border ('┌', '┬', '┐'),
+            0 => () => WriteLine ("┌───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┐"),
             2 => () => Pieces (black),
             6 => () => Pawn ('♟'),
             26 => () => Pawn ('♙'),
             30 => () => Pieces (white),
-            32 => () => Border ('└', '┴', '┘'),
-            _ when i % 4 is 0 => () => Border ('├', '┼', '┤'),
-            _ => () => WriteLine ($"{String.Concat (Enumerable.Repeat ("│\t", 8))}│")
+            32 => () => WriteLine ("└───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────┘"),
+            _ when i % 4 is 0 => () => WriteLine ("├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤"),
+            _ => () => WriteLine ("│       │       │       │       │       │       │       │       │")
          };
          action ();
       }
@@ -33,10 +33,6 @@ internal class Program {
    static void Pieces (char[] colour) {
       for (int i = 0; i < 8; i++) Write ($"│   {colour[i]}   "); WriteLine ("│");
    }
-
-   // Print border line
-   static void Border (char left, char mid, char right)
-      => WriteLine ($"{left}{String.Concat (Enumerable.Repeat ($"───────{mid}", 7))}───────{right}");
 
    // Print a row of pawns
    static void Pawn (char piece)
