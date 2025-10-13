@@ -31,7 +31,7 @@ internal class Program {
 
    // Print pieces in a row
    static void Pieces (char[] colour) {
-      for (int i = 0; i <= 7; i++) Write ($"│   {colour[i]}   "); WriteLine ("│");
+      for (int i = 0; i < 8; i++) Write ($"│   {colour[i]}   "); WriteLine ("│");
    }
 
    // Print border line
