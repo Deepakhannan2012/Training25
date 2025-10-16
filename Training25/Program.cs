@@ -26,8 +26,7 @@ internal class Program {
    }
 
    // Aligns the text to center it within the specified width
-   static string PadCenter (string text, int width)
-      => text.PadLeft ((text.Length + width)  / 2);
+   static string PadCenter (string text, int width) => text.PadLeft ((text.Length + width) / 2);
 
    // Calculates the length of the largest number in a Pascal's triangle
    static int MaxNumLen () {
