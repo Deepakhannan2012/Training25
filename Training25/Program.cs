@@ -17,7 +17,7 @@ internal class Program {
          Write ("Enter a new password: ");
          input = ReadLine () ?? "";
          StringBuilder sb = new ();
-         if (!(input.Length >= 6)) sb.AppendLine ("* Atleast 6 characters");
+         if (input.Length < 6) sb.AppendLine ("* Atleast 6 characters");
          if (!input.Any (char.IsDigit)) sb.AppendLine ("* A digit");
          if (!input.Any (char.IsLower)) sb.AppendLine ("* A lowercase English character");
          if (!input.Any (char.IsUpper)) sb.AppendLine ("* An uppercase English character");
