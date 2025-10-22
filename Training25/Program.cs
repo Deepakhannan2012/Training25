@@ -5,32 +5,26 @@
 // Program.cs
 // Program on T08 branch.
 // ------------------------------------------------------------------------------------------------
+using System.Text;
 using static System.Console;
 
 namespace Training25;
 internal class Program {
    static void Main (string[] args) {
+      string input;
+      char[] splChar = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '-'];
       while (true) {
          Write ("Enter a new password: ");
-         sInput = ReadLine () ?? "";
-         if (Check ()) { WriteLine ("Strong Password !"); break; } else WriteLine ("Try again !\n");
+         input = ReadLine () ?? "";
+         StringBuilder sb = new ();
+         if (!(input.Length >= 6)) sb.AppendLine ("* Atleast 6 characters");
+         if (!input.Any (char.IsDigit)) sb.AppendLine ("* A digit");
+         if (!input.Any (char.IsLower)) sb.AppendLine ("* A lowercase English character");
+         if (!input.Any (char.IsUpper)) sb.AppendLine ("* An uppercase English character");
+         if (!input.Any (c => splChar.Contains (c))) sb.AppendLine ("* A special character");
+         if (sb.Length is 0) {
+            WriteLine ("Strong password !"); break;
+         } else WriteLine ($"Weak password.\nIt must meet the following criteria:\n{sb} ");
       }
    }
-
-   // Checks if the password is strong or not
-   static bool Check () {
-      char[] splChar = { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')' };
-      bool isDigit = sInput.Any (char.IsDigit), isUp = sInput.Any (char.IsUpper), isLow = sInput.Any (char.IsLower),
-           isSpl = sInput.Any (c => splChar.Contains (c)), isLen = sInput.Length >= 6;
-      var errorList = new List<(bool cond, string mess)> { ( isLen, "a minimum of 6 characters !" ),
-                                                           ( isDigit, "a digit !" ),
-                                                           ( isLow, "an lowercase English letter !" ),
-                                                           ( isUp, "an uppercase English letter !" ),
-                                                           ( isSpl, "a special character !" ) };
-      foreach (var (cond, mess) in errorList) if (!cond) WriteLine ($"It must contain {mess}");
-      return (isLen && isDigit && isLow && isUp && isSpl);
-   }
-
-   static string sInput = "";
 }
-
