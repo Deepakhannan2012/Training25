@@ -11,19 +11,22 @@ using static System.Console;
 namespace Training25;
 internal class Program {
    static void Main (string[] args) {
-      Write ("Enter a string to reduce: ");
-      sInput = ReadLine () ?? "";
-      string output = ReducedString().Length is 0 ? "an empty string" : ReducedString ();
-      WriteLine ($"The reduced form is {output}.");
+      Write ("Enter a lowercase string to reduce: ");
+      while (true) {
+         sInput = ReadLine ()?.ToLower ().Trim () ?? "";
+         if (sInput.All (char.IsLetter)) break;
+         Write ("Invalid input. Please enter only letters: ");
+      }
+      string output = ReducedString ();
+      WriteLine ($"The reduced form is {(output.Length is 0 ? "an empty string" : output)}.");
    }
 
    // Returns the reduced form of the input string
    static string ReducedString () {
       StringBuilder sb = new ();
-      char[] myArray = sInput.ToLower().ToCharArray ();
-      for (int i = 0; i < myArray.Length;) {
-         if (i < myArray.Length - 1 && myArray[i] == myArray[i + 1]) i += 2;
-         else { sb.Append (myArray[i]); i++; }
+      for (int i = 0; i < sInput.Length;) {
+         if (i < sInput.Length - 1 && sInput[i] == sInput[i + 1]) i += 2;
+         else { sb.Append (sInput[i]); i++; }
       }
       return sb.ToString ();
    }
