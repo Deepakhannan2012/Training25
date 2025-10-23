@@ -34,10 +34,10 @@ internal class Program {
             _ => EChar.None
          };
       StringBuilder sb = new ();
-      var errorMsg = new List<(EChar criteria, string error)> {
-         (EChar.Length , "* Atleast 6 characters"), (EChar.Digit, "* A digit"), (EChar.Spl, "* A special character"),
+      (EChar, string)[] errorMsg = [
+         (EChar.Length, "* Atleast 6 characters"), (EChar.Digit, "* A digit"), (EChar.Spl, "* A special character"),
          (EChar.Lower, "* A lowercase English character"), (EChar.Upper, "* An uppercase English character")
-      };
+      ];
       foreach (var (criteria, error) in errorMsg)
          if ((flags & criteria) is 0) sb.AppendLine (error);
       return sb.ToString ();
