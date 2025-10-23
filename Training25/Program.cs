@@ -14,7 +14,7 @@ internal class Program {
       Write ("Enter a lowercase string to reduce: ");
       while (true) {
          sInput = ReadLine ()?.ToLower ().Trim () ?? "";
-         if (sInput.All (char.IsLetter) && !string.IsNullOrEmpty (sInput)) break;
+         if (!string.IsNullOrEmpty (sInput) && sInput.All (char.IsLetter)) break;
          Write ("Invalid input ! Please enter only letters: ");
       }
       string output = ReducedString ();
