@@ -22,10 +22,10 @@ internal class Program {
 
    // Returns error message for missing criteria
    static string ErrorMsg () {
-      char[] splChar = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '-'];
+      string splChar = "!@#$%^&*()+-";
       EChar flags = EChar.None;
       if (sInput.Length >= 6) flags |= EChar.Length;
-      foreach (char c in sInput)
+      foreach (char c in sInput) {
          flags |= c switch {
             _ when char.IsDigit (c) => EChar.Digit,
             _ when char.IsLower (c) => EChar.Lower,
@@ -33,6 +33,8 @@ internal class Program {
             _ when splChar.Contains (c) => EChar.Spl,
             _ => EChar.None
          };
+         if (flags is (EChar.Length | EChar.Digit | EChar.Lower | EChar.Upper | EChar.Spl)) return "";
+      }
       StringBuilder sb = new ();
       (EChar, string)[] errorMsg = [
          (EChar.Length, "* Atleast 6 characters"), (EChar.Digit, "* A digit"), (EChar.Spl, "* A special character"),
