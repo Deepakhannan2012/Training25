@@ -11,20 +11,39 @@ using static System.Console;
 namespace Training25;
 internal class Program {
    static void Main (string[] args) {
-      string input;
-      char[] splChar = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '-'];
       while (true) {
          Write ("Enter a new password: ");
-         input = ReadLine () ?? "";
-         StringBuilder sb = new ();
-         if (input.Length < 6) sb.AppendLine ("* Atleast 6 characters");
-         if (!input.Any (char.IsDigit)) sb.AppendLine ("* A digit");
-         if (!input.Any (char.IsLower)) sb.AppendLine ("* A lowercase English character");
-         if (!input.Any (char.IsUpper)) sb.AppendLine ("* An uppercase English character");
-         if (!input.Any (c => splChar.Contains (c))) sb.AppendLine ("* A special character");
-         if (sb.Length is 0) {
-            WriteLine ("Strong password !"); break;
-         } else WriteLine ($"Weak password.\nIt must meet the following criteria:\n{sb} ");
+         sInput = ReadLine () ?? "";
+         string result = ErrorMsg ();
+         if (result.Length is 0) { WriteLine ("Strong password !"); break; }
+         WriteLine ($"Weak password.\nIt must meet the following criteria:\n{result}");
       }
    }
+
+   // Returns error message for missing criteria
+   static string ErrorMsg () {
+      char[] splChar = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '-'];
+      EChar flags = EChar.None;
+      if (sInput.Length >= 6) flags |= EChar.Length;
+      foreach (char c in sInput)
+         flags |= c switch {
+            _ when char.IsDigit (c) => EChar.Digit,
+            _ when char.IsLower (c) => EChar.Lower,
+            _ when char.IsUpper (c) => EChar.Upper,
+            _ when splChar.Contains (c) => EChar.Spl,
+            _ => EChar.None
+         };
+      StringBuilder sb = new ();
+      var errorMsg = new List<(EChar criteria, string error)> {
+         (EChar.Length , "* Atleast 6 characters"), (EChar.Digit, "* A digit"), (EChar.Spl, "* A special character"),
+         (EChar.Lower, "* A lowercase English character"), (EChar.Upper, "* An uppercase English character")
+      };
+      foreach (var (criteria, error) in errorMsg)
+         if ((flags & criteria) is 0) sb.AppendLine (error);
+      return sb.ToString ();
+   }
+
+   enum EChar { None = 0, Length = 1, Digit = 2, Lower = 4, Upper = 8, Spl = 16 }
+
+   static string sInput = "";
 }
