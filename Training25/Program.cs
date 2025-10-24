@@ -3,12 +3,35 @@
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------
 // Program.cs
-// Program on main branch.
+// Program on T10 branch.
 // ------------------------------------------------------------------------------------------------
-namespace Training25 {
-   internal class Program {
-      static void Main (string[] args) {
-         Console.WriteLine ("Hello, World!");
+using System.Text;
+using static System.Console;
+
+namespace Training25;
+internal class Program {
+   static void Main (string[] args) {
+      while (true) {
+         Write ("Enter the string to be reversed: ");
+         sInput = ReadLine ()?.Trim () ?? "";
+         if (!string.IsNullOrWhiteSpace (sInput)) break;
+         WriteLine ("Input cannot be empty !");
       }
+      WriteLine ($"Reversed string: {Reverse ()}");
    }
+
+   static string Reverse () {
+      string revString = new ([.. sInput.Replace (" ", "").Reverse ()]); int revIndex = 0;
+      StringBuilder sb = new ();
+      for (int i = 0; i < sInput.Length; i++) {
+         sb.Append (sInput[i] switch {
+            ' ' => ' ',
+            _ when char.IsUpper (sInput[i]) => char.ToUpper (revString[revIndex++]),
+            _ => char.ToLower (revString[revIndex++])
+         });
+      }
+      return sb.ToString ();
+   }
+
+   static string sInput = "";
 }
