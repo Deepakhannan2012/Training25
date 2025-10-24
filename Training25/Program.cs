@@ -24,6 +24,7 @@ internal class Program {
    static string ErrorMsg () {
       string splChar = "!@#$%^&*()+-";
       EChar flags = EChar.None;
+      EChar eAll = EChar.Length | EChar.Digit | EChar.Lower | EChar.Upper | EChar.Spl;
       if (sInput.Length >= 6) flags |= EChar.Length;
       foreach (char c in sInput) {
          flags |= c switch {
@@ -33,7 +34,7 @@ internal class Program {
             _ when splChar.Contains (c) => EChar.Spl,
             _ => EChar.None
          };
-         if (flags is (EChar.Length | EChar.Digit | EChar.Lower | EChar.Upper | EChar.Spl)) return "";
+         if (flags == eAll) return "";
       }
       StringBuilder sb = new ();
       (EChar, string)[] errorMsg = [
