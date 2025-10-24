@@ -22,18 +22,18 @@ internal class Program {
    }
 
    static string Reverse () {
-      string revString = new ([.. sInput.Replace (" ", "").Reverse ()]);
-      int revIndex = 0;
-      StringBuilder sb = new ();
-      for (int i = 0; i < sInput.Length; i++) {
+      string revString = new ([.. sInput.Replace (" ", "")]);
+      int revIndex = 1, inputLen = sInput.Length;
+      char[] output = new char[inputLen];
+      for (int i = 0; i < inputLen; i++) {
          char currentChar = sInput[i];
-         sb.Append (currentChar switch {
+         output[i] = currentChar switch {
             ' ' => ' ',
-            _ when char.IsUpper (currentChar) => char.ToUpper (revString[revIndex++]),
-            _ => char.ToLower (revString[revIndex++])
-         });
+            _ when char.IsUpper (currentChar) => char.ToUpper (revString[^revIndex++]),
+            _ => char.ToLower (revString[^revIndex++])
+         };
       }
-      return sb.ToString ();
+      return new string (output);
    }
 
    static string sInput = "";
