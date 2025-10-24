@@ -9,6 +9,7 @@ using System.Text;
 using static System.Console;
 
 namespace Training25;
+
 internal class Program {
    static void Main (string[] args) {
       while (true) {
@@ -21,12 +22,14 @@ internal class Program {
    }
 
    static string Reverse () {
-      string revString = new ([.. sInput.Replace (" ", "").Reverse ()]); int revIndex = 0;
+      string revString = new ([.. sInput.Replace (" ", "").Reverse ()]);
+      int revIndex = 0;
       StringBuilder sb = new ();
       for (int i = 0; i < sInput.Length; i++) {
-         sb.Append (sInput[i] switch {
+         char currentChar = sInput[i];
+         sb.Append (currentChar switch {
             ' ' => ' ',
-            _ when char.IsUpper (sInput[i]) => char.ToUpper (revString[revIndex++]),
+            _ when char.IsUpper (currentChar) => char.ToUpper (revString[revIndex++]),
             _ => char.ToLower (revString[revIndex++])
          });
       }
