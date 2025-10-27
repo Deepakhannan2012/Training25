@@ -12,9 +12,9 @@ namespace Training25;
 internal class Program {
    static void Main () {
       int num;
-      // First 25 Armstrong numbers are handled as it takes longer to compute beyond the 25 numbers
+      // First 25 Armstrong numbers are handled as it takes longer time to compute beyond the 25 numbers
       Write ("Enter a number(n) between 1 and 25 to find the nth Armstrong number: ");
-      while (!int.TryParse (ReadLine (), out num) || num > 25) Write ("Enter a valid input: ");
+      while (!int.TryParse (ReadLine (), out num) || num is < 1 or > 25) Write ("Enter a valid input: ");
       (int counter, int firstNum) = (0, 0);
       while (true) {
          if (IsArmstrong (firstNum++) && ++counter == num) {
@@ -36,7 +36,7 @@ internal class Program {
       int digits = (int)Math.Log10 (num) + 1;
       return num == Total (num, digits);
 
-      // Calculate the sum of the digits raised to the power of number of digits
+      // Calculates the sum of the digits raised to the power of number of digits
       static int Total (int num, int digits)
          => (num is not 0) ? (int)Math.Pow (num % 10, digits) + Total (num / 10, digits) : 0;
    }
