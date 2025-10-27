@@ -19,6 +19,7 @@ internal class Program {
 
    // Checks if the input is an Armstrong number
    static bool IsArmstrong (int num) {
+      if (num < 10) return true;
       int digits = (int)Math.Log10 (num) + 1;
       return num == Total (num, digits);
 
