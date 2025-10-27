@@ -13,7 +13,7 @@ internal class Program {
    static void Main () {
       int num;
       Write ("Enter a number to check if it is an Armstrong number: ");
-      while (!int.TryParse (ReadLine (), out num) || num < 1) Write ("Enter a valid input: ");
+      while (!int.TryParse (ReadLine (), out num) || num < 0) Write ("Enter a valid input: ");
       WriteLine ($"{num} {(IsArmstrong (num) ? "is" : "is not")} an Armstrong number");
    }
 
