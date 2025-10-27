@@ -10,17 +10,17 @@ using static System.Console;
 namespace Training25;
 
 internal class Program {
-   static void Main (string[] args) {
+   static void Main () {
       int num;
       Write ("Enter a number to check if it is an Amstrong number: ");
       while (!int.TryParse (ReadLine (), out num) || num < 1) Write ("Enter a valid input: ");
-      WriteLine ($"{num} {(IsArmstrong (num) ? "is" : "is not")} an Amstrong number");
+      WriteLine ($"{num} {(IsArmstrong (num) ? "is" : "is not")} an Armstrong number");
    }
 
-   // Check if the input is an Armstrong number
+   // Checks if the input is an Armstrong number
    static bool IsArmstrong (int num) {
       int digits = (int)Math.Log10 (num) + 1;
-      return (num == Total (num, digits));
+      return num == Total (num, digits);
 
       // Calculate the sum of the digits raised to the power of number of digits
       static int Total (int num, int digits)
