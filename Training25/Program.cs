@@ -16,7 +16,7 @@ internal class Program {
       Write ("Enter the string representation of the votes: ");
       do {
          input = ReadLine () ?? "";
-         isValid = !string.IsNullOrEmpty (input) && input.Trim ().All (Char.IsLetter);
+         isValid = !string.IsNullOrEmpty (input) && input.All (Char.IsLetter);
          if (!isValid) Write ("Invalid input. Please enter a string containing only letters: ");
       } while (!isValid);
       MaxVotes (input, out char maxChar, out int maxVote);
