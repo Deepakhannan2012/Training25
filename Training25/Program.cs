@@ -27,9 +27,8 @@ internal class Program {
       (maxChar, maxVotes) = (' ', 0);
       Dictionary<char, int> charCount = [];
       foreach (char ch in input) {
-         int count = charCount.TryGetValue (ch, out int currentCount) ? currentCount + 1 : 1;
-         charCount[ch] = count;
-         if (count > maxVotes) (maxChar, maxVotes) = (ch, count);
+         charCount[ch] = charCount.TryGetValue (ch, out int votes) ? ++votes : 1;
+         if (charCount[ch] > maxVotes) (maxChar, maxVotes) = (ch, charCount[ch]);
       }
    }
 }
