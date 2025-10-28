@@ -15,11 +15,8 @@ internal class Program {
       Write ("Enter the string representation of the votes: ");
       while (true) {
          input = ReadLine ()?.ToLower () ?? "";
-         if (string.IsNullOrEmpty (input) || !input.All (Char.IsLetter)) {
-            Write ("Invalid input. Please enter a string containing only letters: ");
-            continue;
-         }
-         break;
+         if (!string.IsNullOrEmpty (input) || input.All (Char.IsLetter)) break;
+         Write ("Invalid input. Please enter a string containing only letters: ");
       }
       MaxVotes (input, out char maxChar, out int maxVote);
       WriteLine ($"The winner is {maxChar} with {maxVote} votes");
@@ -29,9 +26,9 @@ internal class Program {
    static void MaxVotes (string input, out char maxChar, out int maxVotes) {
       (maxChar, maxVotes) = (' ', 0);
       Dictionary<char, int> charCount = [];
-      foreach (char ch in input)
+      foreach (char ch in input) {
          charCount[ch] = charCount.TryGetValue (ch, out int currentCount) ? currentCount + 1 : 1;
-      foreach (var pair in charCount)
-         if (pair.Value > maxVotes) (maxChar, maxVotes) = (pair.Key, pair.Value);
+         if (charCount[ch] > maxVotes) (maxChar, maxVotes) = (ch, charCount[ch]);
+      }
    }
 }
