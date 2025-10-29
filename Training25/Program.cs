@@ -16,6 +16,7 @@ internal class Program {
       WriteLine ($"The sorted number is: {DigitSorter ()}");
    }
 
+   // Separates the even and odd digits from a number and sorts them individually
    static string DigitSorter () {
       int[] numArray = new int[(int)Math.Log10 (num) + 1];
       (int startIndex, int endIndex) = (0, 0);
