@@ -10,29 +10,29 @@ using static System.Console;
 namespace Training25;
 
 internal class Program {
-   static void Main (string[] args) {
+   static void Main () {
+      int num;
       Write ("Enter a positive number to find its smallest transform: ");
-      while (!int.TryParse (ReadLine (), out sInput) || sInput < 1) Write ("Invalid input ! Enter a valid number: ");
-      WriteLine ($"The smallest number of changes required is {SmallTransform ()}.");
+      while (!int.TryParse (ReadLine (), out num) || num < 1) Write ("Invalid input ! Enter a valid number: ");
+      (int minChanges, string finalNum) = SmallestTransform (num);
+      WriteLine ($"Transformed number: {finalNum}\nMinimum no. of changes: {minChanges}");
    }
 
-   // Returns the smallest transform
-   static int SmallTransform () {
-      int[] numArray = new int[sInput.ToString ().Length];
+   // Returns a tuple with the smallest number of changes required to transform digits and the number it transforms to
+   static (int, string) SmallestTransform (int num) {
+      int length = (int)Math.Log10 (num) + 1;
+      int[] numArray = new int[length];
       int index = 0;
-      while (sInput is not 0) {
-         numArray[index++] = sInput % 10;
-         sInput /= 10;
+      while (num is not 0) {
+         numArray[index++] = num % 10;
+         num /= 10;
       }
-      int minValue = int.MaxValue;
+      (int minChanges, int finalDigit) = (int.MaxValue, 0);
       foreach (var item in numArray) {
          int temp = 0;
-         foreach (var item1 in numArray)
-            temp += Math.Abs (item1 - item);
-         if (temp < minValue) minValue = temp;
+         foreach (var item1 in numArray) temp += Math.Abs (item1 - item);
+         if (temp < minChanges) (minChanges, finalDigit) = (temp, item);
       }
-      return minValue;
+      return (minChanges, new string ((char)(finalDigit + '0'), length));
    }
-
-   static int sInput;
 }
