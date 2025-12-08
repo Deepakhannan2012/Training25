@@ -9,6 +9,7 @@ using static System.Console;
 
 namespace Training25;
 
+#region class Program -----------------------------------------------------------------------------
 internal class Program {
    static void Main () {
       List<char> list = [];
@@ -36,24 +37,19 @@ internal class Program {
       for (int i = 0; i < myList.Count; i++) Write ($"{myList[i]} ");
    }
 }
+#endregion
 
+#region class MyList<T> ---------------------------------------------------------------------------
 class MyList<T> {
-   T[] mItems;
-   int mCount;
 
+   #region Constructor ----------------------------------------------
    public MyList () {
       mItems = new T[4];
       mCount = 0;
    }
+   #endregion
 
-   // Doubles the capacity of the array
-   private void Resize () {
-      T[] newItems = new T[mItems.Length * 2];
-      for (int i = 0; i < mItems.Length; i++)
-         newItems[i] = mItems[i];
-      mItems = newItems;
-   }
-
+   #region Properties -----------------------------------------------
    // Returns the number of elements in the list
    public int Count => mCount;
 
@@ -63,15 +59,17 @@ class MyList<T> {
    // Gets or sets the element at a specific index
    public T this[int index] {
       get {
-         if (index < 0 || index >= mCount) throw new ArgumentOutOfRangeException (nameof (index), "Index out of range");
+         IsValidIndex (index);
          return mItems[index];
       }
       set {
-         if (index < 0 || index >= mCount) throw new ArgumentOutOfRangeException (nameof (index), "Index out of range");
+         IsValidIndex (index);
          mItems[index] = value;
       }
    }
+   #endregion
 
+   #region Methods --------------------------------------------------
    // Adds an item to the end of the list
    public void Add (T item) {
       if (mCount == mItems.Length) Resize ();
@@ -89,10 +87,7 @@ class MyList<T> {
    }
 
    // Clears all items from the list
-   public void Clear () {
-      mItems = new T[4];
-      mCount = 0;
-   }
+   public void Clear () => Array.Clear (mItems);
 
    // Inserts an item at the specified index
    public void Insert (int index, T item) {
@@ -109,4 +104,26 @@ class MyList<T> {
       for (int i = index; i < mCount - 1; i++) mItems[i] = mItems[i + 1];
       mItems[--mCount] = default!;
    }
+   #endregion
+
+   #region Implementation -------------------------------------------
+   // Doubles the capacity of the array
+   private void Resize () {
+      T[] newItems = new T[mItems.Length * 2];
+      for (int i = 0; i < mItems.Length; i++)
+         newItems[i] = mItems[i];
+      mItems = newItems;
+   }
+
+   // Checks if the index is valid and throws an exception
+   private void IsValidIndex (int index) {
+      if (index < 0 || index >= mCount) throw new IndexOutOfRangeException ("Index out of range");
+   }
+   #endregion
+
+   #region Private Data ---------------------------------------------
+   T[] mItems;
+   int mCount;
+   #endregion
 }
+#endregion
