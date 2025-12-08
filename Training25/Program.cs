@@ -87,7 +87,10 @@ class MyList<T> {
    }
 
    // Clears all items from the list
-   public void Clear () => Array.Clear (mItems);
+   public void Clear () {
+      Array.Clear (mItems, 0, Count);
+      mCount = 0;
+   }
 
    // Inserts an item at the specified index
    public void Insert (int index, T item) {
@@ -108,7 +111,7 @@ class MyList<T> {
 
    #region Implementation -------------------------------------------
    // Doubles the capacity of the array
-   private void Resize () {
+   void Resize () {
       T[] newItems = new T[mItems.Length * 2];
       for (int i = 0; i < mItems.Length; i++)
          newItems[i] = mItems[i];
@@ -116,7 +119,7 @@ class MyList<T> {
    }
 
    // Checks if the index is valid and throws an exception
-   private void IsValidIndex (int index) {
+   void IsValidIndex (int index) {
       if (index < 0 || index >= mCount) throw new IndexOutOfRangeException ("Index out of range");
    }
    #endregion
